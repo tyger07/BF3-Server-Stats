@@ -32,7 +32,7 @@ https://github.com/tyger07/BF3-Server-Stats/zipball/master
 
 You may change the appearance of the page by modifying the stats.css file in the common folder.
 
-3) Fill in the required parameters in config.php.
+3) Fill in the required parameters in /config/config.php.
 
 Note:  You may not include single quotation marks (') in the following fields without also using an appropriate php delimiter.
 For instance, you may not call your clan 'Ty_ger07's Clan' as it would cause a php compilation error.
@@ -107,6 +107,9 @@ Enjoy!
 
 
 ## Changelog:
+
+11-06-2016:
+- Image /common/images/weapons/RoadKill.png should be name Roadkill.png.
 
 11-04-2016:
 - As requested by armypolice_UK from http://www.synergy-clan.eu/ , this is the BF3 version ported over from the 8-29-16 dated version of my popular BF4-Server-Stats stats webpage.
