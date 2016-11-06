@@ -110,6 +110,7 @@ Enjoy!
 
 11-06-2016:
 - Image /common/images/weapons/RoadKill.png should be name Roadkill.png.
+- At bottom of player stats page, added link to www.team-des-fra.fr Cheat-O-Meter instead of www.247fairplay.com CheatDetector.
 
 11-04-2016:
 - As requested by armypolice_UK from http://www.synergy-clan.eu/ , this is the BF3 version ported over from the 8-29-16 dated version of my popular BF4-Server-Stats stats webpage.
