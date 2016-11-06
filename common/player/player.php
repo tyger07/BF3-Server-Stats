@@ -1070,7 +1070,7 @@ if($SoldierName != null AND $SoldierName != 'Not Found')
 	<table class="prettytable">
 	<tr>
 	<td class="tablecontents" width="33%" style="text-align: center"><span class="information">Battlelog Stats: </span><a href="http://battlelog.battlefield.com/bf3/user/' . $SoldierName . '" target="_blank">www.Battlelog.Battlefield.com</a></td>
-	<td class="tablecontents" width="33%" style="text-align: center"><span class="information">CheatDetector: </span><a href="https://www.247fairplay.com/CheatDetector/' . $SoldierName . '" target="_blank">www.247fairplay.com</a></td>
+	<td class="tablecontents" width="33%" style="text-align: center"><span class="information">Cheat-O-Meter: </span><a href="http://www.team-des-fra.fr/CoM/bf3.php?p=' . $SoldierName . '" target="_blank">www.Team-Des-Fra.fr/</a></td>
 	<td class="tablecontents" width="33%" style="text-align: center"><span class="information">Metabans: </span><a href="http://metabans.com/search/' . $SoldierName . '" target="_blank">www.Metabans.com</a></td>
 	</tr>
 	</table>
