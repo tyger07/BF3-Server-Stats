@@ -1,12 +1,19 @@
-RewriteEngine on
-RewriteRule ^(.*)\.png $1.php [NC]
-
 ExpiresActive On
 ExpiresDefault A0
+
+# 1 WEEK
+<FilesMatch "\.(jpg|jpeg|png|ico|gif)$">
+ExpiresDefault A604800
+</FilesMatch>
 
 # 1 DAY
 <FilesMatch "\.(txt|xml|js|css)$">
 ExpiresDefault A86400
+</FilesMatch>
+
+# 1 WEEK
+<FilesMatch "\.(jpg|jpeg|png|ico|gif)$">
+Header set Cache-Control "max-age=604800, public"
 </FilesMatch>
 
 # 1 DAY

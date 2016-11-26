@@ -267,9 +267,6 @@ function rank($ServerID,$valid_ids,$PlayerID,$BF3stats,$GameID)
 	$now_timestamp = time();
 	$old = $now_timestamp - 43200;
 	// this is a combined stats page
-	// check if this player's rank is cached in the database
-	// we do this early so that we can insert dummy data now into the database (if necessary) to reduce duplicates later when the slower parallel process is executed
-	// (in other words, insert dummy data now quickly, so later the parallel slow execution updates the one dummy data row instead of inserting multiple new data rows in parallel)
 	if(empty($ServerID))
 	{
 		// check if score rank is already cached
@@ -285,6 +282,9 @@ function rank($ServerID,$valid_ids,$PlayerID,$BF3stats,$GameID)
 		if(@mysqli_num_rows($ScoreC_q) == 0)
 		{
 			// insert useless dummy data for now
+			// we do this early so that we can insert dummy data now into the database (if necessary) to reduce duplicates later when the slower parallel process is executed
+			// (in other words, insert dummy data now quickly, so later the parallel slow execution updates the one dummy data row instead of inserting multiple new data rows in parallel)
+			// only do this if this is a combined stats page
 			@mysqli_query($BF3stats,"
 				INSERT INTO `tyger_stats_rank_cache`
 				(`PlayerID`, `GID`, `SID`, `category`, `rank`, `timestamp`)
@@ -292,12 +292,9 @@ function rank($ServerID,$valid_ids,$PlayerID,$BF3stats,$GameID)
 			");
 		}
 	}
-	// done with the dummy cache stuff...
-	// rank players by score (for real!)
-	// check if score rank is already cached
-	// if there is a ServerID, this is a server stats page
-	if(!empty($ServerID))
+	else
 	{
+		// check if score rank is already cached
 		$ScoreC_q = @mysqli_query($BF3stats,"
 			SELECT `rank`, `timestamp`
 			FROM `tyger_stats_rank_cache`
@@ -308,19 +305,8 @@ function rank($ServerID,$valid_ids,$PlayerID,$BF3stats,$GameID)
 			GROUP BY `PlayerID`
 		");
 	}
-	// or else this is a combined stats page
-	else
-	{
-		$ScoreC_q = @mysqli_query($BF3stats,"
-			SELECT `rank`, `timestamp`
-			FROM `tyger_stats_rank_cache`
-			WHERE `PlayerID` = {$PlayerID}
-			AND `category` = 'Score'
-			AND `GID` = '{$GameID}'
-			AND `SID` = '{$valid_ids}'
-			GROUP BY `PlayerID`
-		");
-	}
+	// done with the dummy cache stuff...
+	// rank players by score (for real!)
 	if(@mysqli_num_rows($ScoreC_q) != 0)
 	{
 		$ScoreC_r = @mysqli_fetch_assoc($ScoreC_q);
@@ -2371,7 +2357,7 @@ function cache_top_twenty($ServerID, $valid_ids, $GameID, $BF3stats)
 // function to replace dangerous characters in content
 function textcleaner($content)
 {
-	$content = htmlspecialchars(strip_tags($content));
+	$content = str_replace(array('\'', '"', '\\', '`'), '',htmlspecialchars(strip_tags($content)));
 	// return the value out of the function
 	return $content;
 }

@@ -13,6 +13,8 @@ echo '
 <meta http-equiv="imagetoolbar" content="no" />
 <meta name="resource-type" content="document" />
 <meta name="distribution" content="global" />
+<meta name="viewport" content="width=device-width, initial-scale=0.8" />
+<meta http-equiv="Cache-Control" content="max-age=604800" />
 <meta name="copyright" content="2016 Ty_ger07 https://forum.myrcon.com/showthread.php?15754" />
 <link rel="stylesheet" href="./common/stats.css" type="text/css" />
 <link rel="stylesheet" href="./common/javascript/jquery-ui.css" />
@@ -308,7 +310,16 @@ if(stripos($useragent, 'search') === false && stripos($useragent, 'seek') === fa
 		echo '
 		<br/>
 		<center>
-		<span class="footertext">' . $ses . ' users viewing these BF3 stats pages</span>
+		';
+		if($ses > 1)
+		{
+			echo '<span class="footertext">' . $ses . ' users viewing these BF3 stats pages</span>';
+		}
+		else
+		{
+			echo '<span class="footertext">' . $ses . ' user viewing these BF3 stats pages</span>';
+		}
+		echo '
 		</center>
 		';
 		// display denied bot stats
@@ -334,19 +345,21 @@ if(stripos($useragent, 'search') === false && stripos($useragent, 'seek') === fa
 			// display bot stats
 			echo '
 			<center>
-			<span class="footertext">' . $TotalBots . ' bots have been denied access</span>
+			';
+			if($TotalBots > 1)
+			{
+				echo '<span class="footertext">' . $TotalBots . ' bots have been denied access</span>';
+			}
+			else
+			{
+				echo '<span class="footertext">' . $TotalBots . ' bot has been denied access</span>';
+			}
+			echo '
 			</center>
 			';
 		}
 		// display denied browser stats
 		// check to see if denied table exists
-		@mysqli_query($BF3stats,"
-			CREATE TABLE IF NOT EXISTS `tyger_stats_denied`
-			(`category` VARCHAR(20) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL, `count` INT(11) NOT NULL DEFAULT '0', INDEX (`category`))
-			ENGINE=MyISAM
-			DEFAULT CHARSET=utf8
-			COLLATE=utf8_bin
-		");
 		// count number of browsers recorded
 		$TotalDenied_q = @mysqli_query($BF3stats,"
 			SELECT SUM(`count`) AS count

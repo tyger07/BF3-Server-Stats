@@ -108,6 +108,10 @@ Enjoy!
 
 ## Changelog:
 
+11-26-2016:
+- Added basic AdKats integration to highlight a player if they are banned or warned.
+- Optimizations and improvements.
+
 11-06-2016:
 - Image /common/images/weapons/RoadKill.png should be name Roadkill.png.
 - At bottom of player stats page, added link to www.team-des-fra.fr Cheat-O-Meter instead of www.247fairplay.com CheatDetector.

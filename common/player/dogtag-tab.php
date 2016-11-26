@@ -94,6 +94,33 @@ if(@mysqli_num_rows($DogTag_q) != 0)
 			$link .= 'sid=' . $ServerID . '&amp;';
 		}
 		$link .= 'pid=' . $KillerID . '&amp;p=player';
+		// is this player banned?
+		// or have previous ban which was lifted?
+		$player_banned = 0;
+		$previous_banned = 0;
+		if($adkats_available)
+		{
+			$Ban_q  = @mysqli_query($BF3stats,"
+				SELECT `player_id`
+				FROM `adkats_bans`
+				WHERE `player_id` = {$KillerID}
+				AND `ban_status` = 1
+			");
+			if(@mysqli_num_rows($Ban_q) != 0)
+			{
+				$player_banned = 1;
+			}
+			$Banned_q  = @mysqli_query($BF3stats,"
+				SELECT `player_id`
+				FROM `adkats_bans`
+				WHERE `player_id` = {$KillerID}
+				AND `ban_status` = 2
+			");
+			if(@mysqli_num_rows($Banned_q) != 0)
+			{
+				$previous_banned = 1;
+			}
+		}
 		// show expand/contract if very long
 		if($count == 10)
 		{
@@ -108,7 +135,20 @@ if(@mysqli_num_rows($DogTag_q) != 0)
 		echo '
 		<tr>
 			<td width="5%" class="count"><span class="information">' . $count . '</span></td>
-			<td width="47%" class="tablecontents" style="text-align: left;padding-left: 10px; position: relative;">
+			';
+			if($player_banned == 1)
+			{
+				echo '<td width="47%" class="banoutline" style="text-align: left;padding-left: 10px; position: relative;"><div class="bansubscript">Banned</div>';
+			}
+			elseif($previous_banned == 1)
+			{
+				echo '<td width="47%" class="warnoutline" style="text-align: left;padding-left: 10px; position: relative;"><div class="bansubscript">Warned</div>';
+			}
+			else
+			{
+				echo '<td width="47%" class="tablecontents" style="text-align: left;padding-left: 10px; position: relative;">';
+			}
+			echo '
 				<div style="position: absolute; z-index: 2; width: 100%; height: 100%; top: 0; left: 0; padding: 0px; margin: 0px;">
 					<a class="fill-div" style="padding: 0px; margin: 0px;" href="' . $link . '"></a>
 				</div>

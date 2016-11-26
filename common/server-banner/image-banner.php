@@ -40,8 +40,15 @@ if(extension_loaded('gd') && function_exists('gd_info'))
 			while($row = mysqli_fetch_assoc($result))
 			{
 				$raw_hour = $row['Hourly'];
-				// add missing hours to fill in hours for which the query found no results
+				// add missing hours to fill in hours near the middle and end of the day for which the query found no results
 				while($increment > $raw_hour && $increment != '')
+				{
+					$hour[] = $increment;
+					$average[] = 0;
+					$increment--;
+				}
+				// add missing hours to fill in hours at the beginning of the day for which the query found no results
+				while($increment < $raw_hour && $increment != '' && $increment > 0)
 				{
 					$hour[] = $increment;
 					$average[] = 0;
