@@ -98,27 +98,26 @@ if(@mysqli_num_rows($DogTag_q) != 0)
 		// or have previous ban which was lifted?
 		$player_banned = 0;
 		$previous_banned = 0;
+		$killer_ban_status = 0;
 		if($adkats_available)
 		{
 			$Ban_q  = @mysqli_query($BF3stats,"
-				SELECT `player_id`
+				SELECT `ban_status`
 				FROM `adkats_bans`
 				WHERE `player_id` = {$KillerID}
-				AND `ban_status` = 1
 			");
 			if(@mysqli_num_rows($Ban_q) != 0)
 			{
-				$player_banned = 1;
-			}
-			$Banned_q  = @mysqli_query($BF3stats,"
-				SELECT `player_id`
-				FROM `adkats_bans`
-				WHERE `player_id` = {$KillerID}
-				AND `ban_status` = 2
-			");
-			if(@mysqli_num_rows($Banned_q) != 0)
-			{
-				$previous_banned = 1;
+				$Ban_r = @mysqli_fetch_assoc($Ban_q);
+				$killer_ban_status = $Ban_r['ban_status'];
+				if($killer_ban_status == 'Active')
+				{
+					$player_banned = 1;
+				}
+				elseif($killer_ban_status == 'Expired')
+				{
+					$previous_banned = 1;
+				}
 			}
 		}
 		// show expand/contract if very long

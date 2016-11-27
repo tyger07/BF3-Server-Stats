@@ -1008,27 +1008,26 @@ elseif($SoldierName != null)
 					// or have previous ban which was lifted?
 					$player_banned = 0;
 					$previous_banned = 0;
+					$victim_ban_status = 0;
 					if($adkats_available)
 					{
 						$Ban_q  = @mysqli_query($BF3stats,"
-							SELECT `player_id`
+							SELECT `ban_status`
 							FROM `adkats_bans`
 							WHERE `player_id` = {$VictimID}
-							AND `ban_status` = 1
 						");
 						if(@mysqli_num_rows($Ban_q) != 0)
 						{
-							$player_banned = 1;
-						}
-						$Banned_q  = @mysqli_query($BF3stats,"
-							SELECT `player_id`
-							FROM `adkats_bans`
-							WHERE `player_id` = {$VictimID}
-							AND `ban_status` = 2
-						");
-						if(@mysqli_num_rows($Banned_q) != 0)
-						{
-							$previous_banned = 1;
+							$Ban_r = @mysqli_fetch_assoc($Ban_q);
+							$victim_ban_status = $Ban_r['ban_status'];
+							if($victim_ban_status == 'Active')
+							{
+								$player_banned = 1;
+							}
+							elseif($victim_ban_status == 'Expired')
+							{
+								$previous_banned = 1;
+							}
 						}
 					}
 					// show expand/contract if very long
