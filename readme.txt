@@ -108,6 +108,9 @@ Enjoy!
 
 ## Changelog:
 
+12-06-2016:
+- Fixed a bug which caused only players ranked #2 through #20 to show up in country stats and skipped player ranked #1.
+
 11-26-2016:
 - Added basic AdKats integration to highlight a player if they are banned or warned.
 - Optimizations and improvements.

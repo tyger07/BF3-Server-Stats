@@ -175,6 +175,8 @@ echo '
 <th width="24%">Kill / Death</th>
 </tr>
 ';
+// set the pointer back to the beginning of the query result array
+@mysqli_data_seek($CountryCount_q, 0);
 // no players found
 // this must be a random database error
 // showing blank

@@ -2301,34 +2301,9 @@ function cache_top_twenty($ServerID, $valid_ids, $GameID, $BF3stats)
 				");
 			}
 		}
-		// query the cache again for the new info
-		// if there is a ServerID, this is a server stats page
-		if(!empty($ServerID))
-		{
-			$TopC_q = @mysqli_query($BF3stats,"
-				SELECT `PlayerID`, `SoldierName`, `Score`, `Kills`, `KDR`, `HSR`, `timestamp`
-				FROM `tyger_stats_top_twenty_cache`
-				WHERE `SID` = '{$ServerID}'
-				AND `GID` = '{$GameID}'
-				AND `timestamp` >= '{$old}'
-				GROUP BY `PlayerID`
-				ORDER BY `Score` DESC, `SoldierName` ASC
-			");
-		}
-		else
-		{
-			$TopC_q = @mysqli_query($BF3stats,"
-				SELECT `PlayerID`, `SoldierName`, `Score`, `Kills`, `KDR`, `HSR`, `timestamp`
-				FROM `tyger_stats_top_twenty_cache`
-				WHERE `SID` = '{$valid_ids}'
-				AND `GID` = '{$GameID}'
-				AND `timestamp` >= '{$old}'
-				GROUP BY `PlayerID`
-				ORDER BY `Score` DESC, `SoldierName` ASC
-			");
-		}
-		// if cached and data is newer than 12 hours old...
-		if(@mysqli_num_rows($TopC_q) != 0)
+		// set the pointer back to the beginning of the query result array
+		@mysqli_data_seek($Players_q, 0);
+		if(@mysqli_num_rows($Players_q) != 0)
 		{
 			echo '
 			<div id="cache_fade2" style="position: absolute; top: ';
@@ -2342,7 +2317,7 @@ function cache_top_twenty($ServerID, $valid_ids, $GameID, $BF3stats)
 			}
 			echo ' left: -150px; display: none;">
 			<div class="subsection" style="width: 100px; font-size: 12px;">
-			<center>Cache Used:<br/>Top Twenty</center>
+			<center>Cache Recreated:<br/>Top Twenty</center>
 			</div>
 			</div>
 			<script type="text/javascript">
@@ -2350,7 +2325,7 @@ function cache_top_twenty($ServerID, $valid_ids, $GameID, $BF3stats)
 			</script>
 			';
 			// return the value out of the function
-			return $TopC_q;
+			return $Players_q;
 		}
 	}
 }
