@@ -954,35 +954,76 @@ elseif($SoldierName != null)
 			// if there is a ServerID, this is a server stats page
 			if(!empty($ServerID))
 			{
-				$DogTag_q = @mysqli_query($BF3stats,"
-					SELECT dt.`Count`, tpd2.`SoldierName` AS Victim, tpd2.`PlayerID` AS VictimID
-					FROM `tbl_dogtags` dt
-					INNER JOIN `tbl_server_player` tsp ON tsp.`StatsID` = dt.`KillerID`
-					INNER JOIN `tbl_server_player` tsp2 ON tsp2.`StatsID` = dt.`VictimID`
-					INNER JOIN `tbl_playerdata` tpd ON tsp.`PlayerID` = tpd.`PlayerID`
-					INNER JOIN `tbl_playerdata` tpd2 ON tsp2.`PlayerID` = tpd2.`PlayerID`
-					WHERE tpd.`PlayerID` = {$PlayerID}
-					AND tpd.`GameID` = {$GameID}
-					AND tsp.`ServerID` = {$ServerID}
-					ORDER BY Count DESC, Victim ASC
-				");
+				// is adkats information available?
+				if($adkats_available)
+				{
+					$DogTag_q = @mysqli_query($BF3stats,"
+						SELECT dt.`Count`, tpd2.`SoldierName` AS Victim, tpd2.`PlayerID` AS VictimID, adk.`ban_status`
+						FROM `tbl_dogtags` dt
+						INNER JOIN `tbl_server_player` tsp ON tsp.`StatsID` = dt.`KillerID`
+						INNER JOIN `tbl_server_player` tsp2 ON tsp2.`StatsID` = dt.`VictimID`
+						INNER JOIN `tbl_playerdata` tpd ON tsp.`PlayerID` = tpd.`PlayerID`
+						INNER JOIN `tbl_playerdata` tpd2 ON tsp2.`PlayerID` = tpd2.`PlayerID`
+						LEFT JOIN `adkats_bans` adk ON adk.`player_id` = tpd2.`PlayerID`
+						WHERE tpd.`PlayerID` = {$PlayerID}
+						AND tpd.`GameID` = {$GameID}
+						AND tsp.`ServerID` = {$ServerID}
+						ORDER BY Count DESC, Victim ASC
+					");
+				}
+				else
+				{
+					$DogTag_q = @mysqli_query($BF3stats,"
+						SELECT dt.`Count`, tpd2.`SoldierName` AS Victim, tpd2.`PlayerID` AS VictimID
+						FROM `tbl_dogtags` dt
+						INNER JOIN `tbl_server_player` tsp ON tsp.`StatsID` = dt.`KillerID`
+						INNER JOIN `tbl_server_player` tsp2 ON tsp2.`StatsID` = dt.`VictimID`
+						INNER JOIN `tbl_playerdata` tpd ON tsp.`PlayerID` = tpd.`PlayerID`
+						INNER JOIN `tbl_playerdata` tpd2 ON tsp2.`PlayerID` = tpd2.`PlayerID`
+						WHERE tpd.`PlayerID` = {$PlayerID}
+						AND tpd.`GameID` = {$GameID}
+						AND tsp.`ServerID` = {$ServerID}
+						ORDER BY Count DESC, Victim ASC
+					");
+				}
 			}
 			// or else this is a combined stats page
 			else
 			{
-				$DogTag_q = @mysqli_query($BF3stats,"
-					SELECT SUM(dt.`Count`) AS Count, tpd2.`SoldierName` AS Victim, tpd2.`PlayerID` AS VictimID
-					FROM `tbl_dogtags` dt
-					INNER JOIN `tbl_server_player` tsp ON tsp.`StatsID` = dt.`KillerID`
-					INNER JOIN `tbl_server_player` tsp2 ON tsp2.`StatsID` = dt.`VictimID`
-					INNER JOIN `tbl_playerdata` tpd ON tsp.`PlayerID` = tpd.`PlayerID`
-					INNER JOIN `tbl_playerdata` tpd2 ON tsp2.`PlayerID` = tpd2.`PlayerID`
-					WHERE tpd.`PlayerID` = {$PlayerID}
-					AND tpd.`GameID` = {$GameID}
-					AND tsp.`ServerID` IN ({$valid_ids})
-					GROUP BY Victim
-					ORDER BY Count DESC, Victim ASC
-				");
+				// is adkats information available?
+				if($adkats_available)
+				{
+					$DogTag_q = @mysqli_query($BF3stats,"
+						SELECT SUM(dt.`Count`) AS Count, tpd2.`SoldierName` AS Victim, tpd2.`PlayerID` AS VictimID, adk.`ban_status`
+						FROM `tbl_dogtags` dt
+						INNER JOIN `tbl_server_player` tsp ON tsp.`StatsID` = dt.`KillerID`
+						INNER JOIN `tbl_server_player` tsp2 ON tsp2.`StatsID` = dt.`VictimID`
+						INNER JOIN `tbl_playerdata` tpd ON tsp.`PlayerID` = tpd.`PlayerID`
+						INNER JOIN `tbl_playerdata` tpd2 ON tsp2.`PlayerID` = tpd2.`PlayerID`
+						LEFT JOIN `adkats_bans` adk ON adk.`player_id` = tpd2.`PlayerID`
+						WHERE tpd.`PlayerID` = {$PlayerID}
+						AND tpd.`GameID` = {$GameID}
+						AND tsp.`ServerID` IN ({$valid_ids})
+						GROUP BY Victim
+						ORDER BY Count DESC, Victim ASC
+					");
+				}
+				else
+				{
+					$DogTag_q = @mysqli_query($BF3stats,"
+						SELECT SUM(dt.`Count`) AS Count, tpd2.`SoldierName` AS Victim, tpd2.`PlayerID` AS VictimID
+						FROM `tbl_dogtags` dt
+						INNER JOIN `tbl_server_player` tsp ON tsp.`StatsID` = dt.`KillerID`
+						INNER JOIN `tbl_server_player` tsp2 ON tsp2.`StatsID` = dt.`VictimID`
+						INNER JOIN `tbl_playerdata` tpd ON tsp.`PlayerID` = tpd.`PlayerID`
+						INNER JOIN `tbl_playerdata` tpd2 ON tsp2.`PlayerID` = tpd2.`PlayerID`
+						WHERE tpd.`PlayerID` = {$PlayerID}
+						AND tpd.`GameID` = {$GameID}
+						AND tsp.`ServerID` IN ({$valid_ids})
+						GROUP BY Victim
+						ORDER BY Count DESC, Victim ASC
+					");
+				}
 			}
 			if(@mysqli_num_rows($DogTag_q) != 0)
 			{
@@ -1008,23 +1049,16 @@ elseif($SoldierName != null)
 					// or have previous ban which was lifted?
 					$player_banned = 0;
 					$previous_banned = 0;
-					$victim_ban_status = 0;
 					if($adkats_available)
 					{
-						$Ban_q  = @mysqli_query($BF3stats,"
-							SELECT `ban_status`
-							FROM `adkats_bans`
-							WHERE `player_id` = {$VictimID}
-						");
-						if(@mysqli_num_rows($Ban_q) != 0)
+						$ban_status = $DogTag_r['ban_status'];
+						if(!is_null($ban_status))
 						{
-							$Ban_r = @mysqli_fetch_assoc($Ban_q);
-							$victim_ban_status = $Ban_r['ban_status'];
-							if($victim_ban_status == 'Active')
+							if($ban_status == 'Active')
 							{
 								$player_banned = 1;
 							}
-							elseif($victim_ban_status == 'Expired')
+							elseif($ban_status == 'Expired')
 							{
 								$previous_banned = 1;
 							}
