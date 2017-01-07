@@ -1,10 +1,2 @@
 RewriteEngine on
 RewriteRule ^(.*)\.png $1.php [NC]
-
-ExpiresActive On
-ExpiresDefault A0
-
-# 12 HOURS
-<FilesMatch "\.(png|php)$">
-Header set Cache-Control "max-age=43200, public"
-</FilesMatch>

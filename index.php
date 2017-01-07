@@ -16,6 +16,7 @@ echo '
 <meta name="viewport" content="width=device-width, initial-scale=0.8" />
 <meta http-equiv="Cache-Control" content="max-age=604800" />
 <meta name="copyright" content="2016 Ty_ger07 https://forum.myrcon.com/showthread.php?15754" />
+<link rel="icon" type="image/png" href="./favicon.ico" />
 <link rel="stylesheet" href="./common/stats.css" type="text/css" />
 <link rel="stylesheet" href="./common/javascript/jquery-ui.css" />
 <script type="text/javascript" src="./common/javascript/jquery-1.10.2.js"></script>

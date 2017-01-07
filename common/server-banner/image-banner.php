@@ -304,8 +304,6 @@ if(extension_loaded('gd') && function_exists('gd_info'))
 			imagestring($base, 2, 400, 4, 'Players: Previous 24 Hrs', $yellow);
 			imagestring($base, 2, 120, 4, 'Server Name', $yellow);
 			imagestring($base, 3, 140, 18, $servername, $light);
-			imagestring($base, 2, 120, 32, 'IP Address', $yellow);
-			imagestring($base, 3, 120, 47, $server_ip, $light);
 			imagestring($base, 2, 240, 32, 'Current Mode', $yellow);
 			imagestring($base, 3, 240, 47, $mode_name, $light);
 			imagestring($base, 2, 120, 62, 'Players', $yellow);

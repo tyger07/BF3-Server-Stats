@@ -108,6 +108,9 @@ Enjoy!
 
 ## Changelog:
 
+1-07-2017
+- Removed server IP address from server banner image
+
 12-07-2016:
 - Performance optimization which wraps two queries into one for both the dog tag collected and dog tag surrendered stats when using AdKats.  Performance issue labelled on GitHub as issue #2. Improves performance due to latency. If player had hundreds or thousands of dog tags collected or dog tags surrendered, hundreds or thousands of queries would fire back to back.  Now it is all balled up into one query.  Could improve performance in some cases by 50% or more in this regard.
 
