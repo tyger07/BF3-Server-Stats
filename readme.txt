@@ -112,14 +112,14 @@ Enjoy!
 - Removed server IP address from server banner image
 
 12-07-2016:
-- Performance optimization which wraps two queries into one for both the dog tag collected and dog tag surrendered stats when using AdKats.  Performance issue labelled on GitHub as issue #2. Improves performance due to latency. If player had hundreds or thousands of dog tags collected or dog tags surrendered, hundreds or thousands of queries would fire back to back.  Now it is all balled up into one query.  Could improve performance in some cases by 50% or more in this regard.
+- Performance optimization which wraps two queries into one for both the dog tag collected and dog tag surrendered stats when using AdKats. Performance issue labeled on GitHub as issue #2. Improves performance due to latency. If player had hundreds or thousands of dog tags collected or dog tags surrendered, hundreds or thousands of queries would fire back to back.  Now it is all balled up into one query. Could improve performance in some cases by 50% or more in this regard.
 
 12-06-2016:
 - Fixed a bug which caused only players ranked #2 through #20 to show up in country stats and skipped player ranked #1.
 
 11-26-2016:
 - Added basic AdKats integration to highlight a player if they are banned or warned.
-- Optimizations and improvements.
+- Optimizations and improvements: SQL queries combined where possible to reduce the SQL server connection pool size (can drasticly improve performance in some cases with huge databases at remote locations), server HTML banner uses jquery to reload content instead of reloading the whole HTML document (less distracting reloads), file size reductions for CSS, JS, and some image files, background image resizes width to fit various resolutions better, etc.
 
 11-06-2016:
 - Image /common/images/weapons/RoadKill.png should be name Roadkill.png.
