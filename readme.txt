@@ -108,7 +108,10 @@ Enjoy!
 
 ## Changelog:
 
-1-07-2017
+01-28-2017
+- Unbanned bot access and made bot access restricted instead.  This allows search engines to crawl the stats page and get more clan/community attention while also restricting bot database performance impact to some slower features.
+
+01-07-2017
 - Removed server IP address from server banner image
 
 12-07-2016:
