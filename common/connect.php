@@ -3,15 +3,15 @@
 // https://forum.myrcon.com/showthread.php?15754
 
 // connect to the stats database
-$BF3stats = @mysqli_connect(HOST, USER, PASS, NAME, PORT) or die ("<title>BF3 Player Stats - Error</title></head><body><div id='pagebody'><div class='subsection'><div class='headline'>Unable to access stats database. Please notify this website's administrator.</div></div><br/><div class='subsection'><div class='headline'>If you are the administrator, please seek assistance <a href='https://forum.myrcon.com/showthread.php?15754-Server-Stats-page-for-XpKiller-s-BF3-Chat-GUID-Stats-and-Mapstats-Logger' target='_blank'>here</a>.</div></div><br/><div class='subsection'><div class='headline'>Error: " . mysqli_connect_error() . "</div></div></div></body></html>");
+$BF3stats = @mysqli_connect(HOST, USER, PASS, NAME, PORT) or die ("<title>BF3 Player Stats - Error</title></head><body><div id='pagebody'><div class='subsection'><div class='headline'>Unable to access stats database. Please notify this website's administrator.</div></div><br/><div class='subsection'><div class='headline'>If you are the administrator, please seek assistance <a href='https://forum.myrcon.com/showthread.php?15754' target='_blank'>here</a>.</div></div><br/><div class='subsection'><div class='headline'>Error: " . mysqli_connect_error() . "</div></div></div></body></html>");
 // make sure that the database name wasn't left empty
 if(NAME)
 {
-	@mysqli_select_db($BF3stats, NAME) or die ("<title>BF3 Player Stats - Error</title></head><body><div id='pagebody'><div class='subsection'><div class='headline'>Unable to select stats database. Please notify this website's administrator.</div></div><br/><div class='subsection'><div class='headline'>If you are the administrator, please seek assistance <a href='https://forum.myrcon.com/showthread.php?15754-Server-Stats-page-for-XpKiller-s-BF3-Chat-GUID-Stats-and-Mapstats-Logger' target='_blank'>here</a>.</div></div><br/><div class='subsection'><div class='headline'>Error: Database not found at '" . HOST . "'.</div></div></div></body></html>");
+	@mysqli_select_db($BF3stats, NAME) or die ("<title>BF3 Player Stats - Error</title></head><body><div id='pagebody'><div class='subsection'><div class='headline'>Unable to select stats database. Please notify this website's administrator.</div></div><br/><div class='subsection'><div class='headline'>If you are the administrator, please seek assistance <a href='https://forum.myrcon.com/showthread.php?15754' target='_blank'>here</a>.</div></div><br/><div class='subsection'><div class='headline'>Error: Database not found at '" . HOST . "'.</div></div></div></body></html>");
 }
 else
 {
-	die ("<title>BF3 Player Stats - Error</title></head><body><div id='pagebody'><div class='subsection'><div class='headline'>Unable to select stats database. Please notify this website's administrator.</div></div><br/><div class='subsection'><div class='headline'>If you are the administrator, please seek assistance <a href='https://forum.myrcon.com/showthread.php?15754-Server-Stats-page-for-XpKiller-s-BF3-Chat-GUID-Stats-and-Mapstats-Logger' target='_blank'>here</a>.</div></div><br/><div class='subsection'><div class='headline'>Error: Database '(null)' not found at '" . HOST . "'.</div></div></div></body></html>");
+	die ("<title>BF3 Player Stats - Error</title></head><body><div id='pagebody'><div class='subsection'><div class='headline'>Unable to select stats database. Please notify this website's administrator.</div></div><br/><div class='subsection'><div class='headline'>If you are the administrator, please seek assistance <a href='https://forum.myrcon.com/showthread.php?15754' target='_blank'>here</a>.</div></div><br/><div class='subsection'><div class='headline'>Error: Database '(null)' not found at '" . HOST . "'.</div></div></div></body></html>");
 }
 // initialize values
 $GameID = null;
@@ -40,24 +40,14 @@ if(@mysqli_num_rows($Server_q) != 0)
 else
 {
 	// display error and die
-	die ("<title>BF3 Player Stats - Error</title></head><body><div id='pagebody'><div class='subsection'><div class='headline'>No 'BF3' servers were found in this database! Please notify this website's administrator.</div></div><br/><div class='subsection'><div class='headline'>If you are the administrator, please seek assistance <a href='https://forum.myrcon.com/showthread.php?15754-Server-Stats-page-for-XpKiller-s-BF3-Chat-GUID-Stats-and-Mapstats-Logger' target='_blank'>here</a>.</div></div></div></body></html>");
+	die ("<title>BF3 Player Stats - Error</title></head><body><div id='pagebody'><div class='subsection'><div class='headline'>No 'BF3' servers were found in this database! Please notify this website's administrator.</div></div><br/><div class='subsection'><div class='headline'>If you are the administrator, please seek assistance <a href='https://forum.myrcon.com/showthread.php?15754' target='_blank'>here</a>.</div></div></div></body></html>");
 }
 // merge server IDs array into a variable to use in combined server stats queries later
 $valid_ids = join(',',$ServerIDs);
+
 // is AdKats in this database?
 // set a default value
 $adkats_available = FALSE;
-// query to see if the adkats bans table exists
-$AdKats_q  = @mysqli_query($BF3stats,"
-	SELECT `TABLE_NAME`
-	FROM `INFORMATION_SCHEMA`.`TABLES`
-	WHERE `TABLE_SCHEMA` = '" . NAME . "'
-	AND `TABLE_NAME` = 'adkats_bans'
-");
-if(@mysqli_num_rows($AdKats_q) != 0)
-{
-	$adkats_available = TRUE;
-}
 
 // detect bots
 // set a default value
@@ -73,6 +63,17 @@ if(isset($_SERVER["HTTP_USER_AGENT"]))
 if(stripos($useragent, 'search') === false && stripos($useragent, 'seek') === false && stripos($useragent, 'fetch') === false && stripos($useragent, 'archiv') === false && stripos($useragent, 'spide') === false && stripos($useragent, 'validat') === false && stripos($useragent, 'analyze') === false && stripos($useragent, 'crawl') === false && stripos($useragent, 'robot') === false && stripos($useragent, 'track') === false && stripos($useragent, 'generat') === false && stripos($useragent, 'google') === false && stripos($useragent, 'bing') === false && stripos($useragent, 'msnbot') === false && stripos($useragent, 'yahoo') === false && stripos($useragent, 'facebook') === false && stripos($useragent, 'yandex') === false && stripos($useragent, 'alexa') === false)
 {
 	$isbot = FALSE;
+	// query to see if the adkats bans table exists
+	$AdKats_q  = @mysqli_query($BF3stats,"
+		SELECT `TABLE_NAME`
+		FROM `INFORMATION_SCHEMA`.`TABLES`
+		WHERE `TABLE_SCHEMA` = '" . NAME . "'
+		AND `TABLE_NAME` = 'adkats_bans'
+	");
+	if(@mysqli_num_rows($AdKats_q) != 0)
+	{
+		$adkats_available = TRUE;
+	}
 }
 else
 {
