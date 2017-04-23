@@ -31,29 +31,29 @@
         <hr>
 
         <section id="main_content">
-          <h2>
-<a id="bf3-server-stats-webpage-overview" class="anchor" href="#bf3-server-stats-webpage-overview" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>BF3 Server Stats Webpage Overview</h2>
+		<h2><a id="version-date" class="anchor" href="#version-date" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Version dated: 04/22/2017</h2>
+        <h2><a id="bf3-server-stats-webpage-overview" class="anchor" href="#bf3-server-stats-webpage-overview" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>BF3 Server Stats Webpage Overview</h2>
 
-<p>This page requires the use of a stats database which is created by XpKiller's Procon "BF3 Chat, GUID, Stats and Mapstats Logger" Plugin.
-If you need help with XpKiller's stats logger plugin, you must seek assistance in XpKiller's plugin thread:
-<a href="https://forum.myrcon.com/showthread.php?6698-Chat-GUID-Stats-and-Mapstats-Logger-1-0-0-2">https://forum.myrcon.com/showthread.php?6698-Chat-GUID-Stats-and-Mapstats-Logger-1-0-0-2</a></p>
+<p>This web page code requires the use of a stats database which is created by XpKiller's Procon "BF3 Chat, GUID, Stats and Mapstats Logger" Plugin.
+If you need help setting up and using XpKiller's Stats Logger plugin, you must seek assistance in XpKiller's plugin thread:
+<a href="https://forum.myrcon.com/showthread.php?6698">https://forum.myrcon.com/showthread.php?6698</a></p>
 
 <p>For best compatibility with this webstats page, use the following settings in XpKiller's Procon logging plugin:
-"Enable Statslogging?" : Yes
-"Enable Weaponstats?" : Yes
-"Enable Livescoreboard in DB?" : Yes
-"tableSuffix" : None
-"MapStats ON?" : Yes
-"Session ON?" : Yes
-"Save Sessiondata to DB?" : Yes
+"Enable Statslogging?" : Yes<br/>
+"Enable Weaponstats?" : Yes<br/>
+"Enable Livescoreboard in DB?" : Yes<br/>
+"tableSuffix" : None<br/>
+"MapStats ON?" : Yes<br/>
+"Session ON?" : Yes<br/>
+"Save Sessiondata to DB?" : Yes<br/>
 "Log playerdata only (no playerstats)?" : No</p>
 
-<p>This webpage code requires that you have access to a web server running a modern version of php and requires that you have permission to modify files on the web server.</p>
+<p>This webpage code requires that you have access to an Apache web server running a modern version of php and requires that you have read and write permission to add and modify files and directories on that web server.</p>
 
 <h2>
 <a id="help-and-support" class="anchor" href="#help-and-support" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Help and Support</h2>
 
-<p>Visit the following forum topic:
+<p>For help with this web stats page code, visit the following forum thread:
 <a href="https://forum.myrcon.com/showthread.php?15754">https://forum.myrcon.com/showthread.php?15754</a></p>
 
 <h2>
@@ -64,159 +64,59 @@ If you need help with XpKiller's stats logger plugin, you must seek assistance i
 
 <p>2) Extract the files. (maintain the original folder structure)</p>
 
-<p>You may change the appearance of the page by modifying the stats.css file in the common folder.</p>
+<p>3) Fill in the required parameters in ./config/config.php.  For help with properly modifying the config.php file, see additional instructions further down in this readme file.</p>
 
-<p>3) Fill in the required parameters in config.php.</p>
-
-<p>Note:  You may not include single quotation marks (') in the following fields without also using an appropriate php delimiter.
+<p>Note:  You may not include single quotation marks (') in the config.php fields without also using an appropriate php delimiter.
 For instance, you may not call your clan 'Ty_ger07's Clan' as it would cause a php compilation error.</p>
 
-<p>For example, this would not work:</p>
-
-<p>$clan_name = 'Ty_ger07's Clan';</p>
-
-<p>Using a delimiter would cause it to work:</p>
+<p>Using an appropriate php delimiter, when required, would cause it to work properly.  For example:</p>
 
 <p>$clan_name = 'Ty_ger07\'s Clan';</p>
 
-<p>4) Upload to your php-enabled web server and enjoy!</p>
+<p>4) Upload the entire contents to your php-enabled web server and enjoy!</p>
 
 <h2>
 <a id="you-must-fill-in-the-following-information-in-configphp-which-is-in-the-config-folder" class="anchor" href="#you-must-fill-in-the-following-information-in-configphp-which-is-in-the-config-folder" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>You must fill in the following information in config.php which is in the config folder.</h2>
 
 <p><strong>1)</strong> Input your stats database host, stats database user name, stats database password, and stats database name.</p>
 
-<p>// DATABASE INFORMATION</p>
-
-<p>DEFINE('HOST', '');                                                 // database host address</p>
-
-<p>DEFINE('PORT', '3306');                                             // database port - default is 3306</p>
-
-<p>DEFINE('NAME', '');                                                 // database name</p>
-
-<p>DEFINE('USER', '');                                                 // database user name - sometimes the same as the database name</p>
-
-<p>DEFINE('PASS', '');                                                 // database password</p>
-
 <p>For example:</p>
 
 <p>// DATABASE INFORMATION</p>
-
 <p>DEFINE('HOST', '100.200.300.400');                                  // database host address</p>
-
 <p>DEFINE('PORT', '3306');                                             // database port - default is 3306</p>
-
 <p>DEFINE('NAME', 'database');                                         // database name</p>
-
 <p>DEFINE('USER', 'user');                                             // database user name - sometimes the same as the database name</p>
-
 <p>DEFINE('PASS', 'pass');                                             // database password</p>
 
-<p><strong>Note:</strong> Some web server providers (such as GoDaddy) use the same value for database name and database user name.</p>
+<p><strong>Note:</strong> Some web server providers use the same value for database name and database user name.</p>
 
 <p><strong>2)</strong> Input your clan name as you would like it to appear in the stats pages.</p>
 
-<p>$clan_name = ''; // your gaming clan or organization name</p>
-
 <p>For example:</p>
 
-<p>$clan_name = 'MyClan'; // your gaming clan or organization name</p>
+<p>$clan_name = 'MyClan';												// your gaming clan or organization name</p>
 
-<p><strong>3)</strong> Input your desired banner image URL if you want one other than the default to be displayed.</p>
+<p><strong>3)</strong> Input your desired banner image URL if you want one other than the default banner image to be displayed.</p>
 
-<p>$banner_image = './images/bf3-logo.png'; // your desired page banner</p>
+<p>$banner_image = './images/bf3-logo.png';								// your desired page banner</p>
 
-<p><strong>4)</strong> Enter the URL which you would like users to redirect to if they click your banner image.</p>
+<p><strong>4)</strong> Enter the URL which you would like users to redirect to when they click your banner image.</p>
 
-<p>$banner_url = '<a href="http://tyger07.github.io/BF3-Server-Stats/">http://tyger07.github.io/BF3-Server-Stats/</a>'; // where clicking the banner will take you</p>
-
-<p>Enjoy!</p>
+<p>$banner_url = 'http://tyger07.github.io/BF3-Server-Stats/';			// where clicking the banner will take you</p>
 
 <h2>
-<a id="changelog" class="anchor" href="#changelog" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Changelog:</h2>
+<a id="additional-information" class="anchor" href="#additional-information" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Additional Information</h2>
 
-<p>02-18-2017</p>
+<p>A .sql file is included in the ./test-database/ folder for users to set up a dummy test database to test this web page when they otherwise have not yet set up a server or have not yet got XpKiller's Stats Logger plugin and database working.</p>
 
-<ul>
-<li>When using AdKats, the first (default) page of the leaderboard now loads slightly faster and uses less database connections</li>
-</ul>
+<h2>
+<a id="changelog" class="anchor" href="#changelog" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Changelog</h2>
 
-<p>02-16-2017</p>
+<p>Refer to commmit history on GitHub:
+<a href="https://github.com/tyger07/BF3-Server-Stats/commits/master">https://github.com/tyger07/BF3-Server-Stats/commits/master</a></p>
 
-<ul>
-<li>When using AdKats and when not a bot: Add ban reason to player page</li>
-<li>When using AdKats and when not a bot: Add ban list page displaying all banned players and ban reasons</li>
-</ul>
-
-<p>02-11-2017</p>
-
-<ul>
-<li>Free up the top 142px of the page when scrolling down.</li>
-</ul>
-
-<p>02-09-2017</p>
-
-<ul>
-<li>Instead of counting every bot view as a new bot, only add bot as a new bot if it is during a new bot session.</li>
-</ul>
-
-<p>02-07-2017</p>
-
-<ul>
-<li>Reduced the rate at which autocomplete tries to fill in searches</li>
-<li>Added page request throttles.  If a user tries to load pages every 1 to 2 seconds, server adds a 1 second delay.  If a user tries to load pages every 1 second or less, the server denies the request and gives them an error message and redirect link.</li>
-</ul>
-
-<p>02-05-2017</p>
-
-<ul>
-<li>Added warning to scoreboard if a possible server connection issue was detected</li>
-<li>Added simple chat search suggestions which shouldn't have a huge impact on database performance</li>
-</ul>
-
-<p>01-28-2017</p>
-
-<ul>
-<li>Unbanned bot access and made bot access restricted instead.  This allows search engines to crawl the stats page and get more clan/community attention while also restricting bot database performance impact to some slower features.</li>
-</ul>
-
-<p>1-07-2017</p>
-
-<ul>
-<li>Removed server IP address from server banner image</li>
-</ul>
-
-<p>12-07-2016:</p>
-
-<ul>
-<li>Performance optimization which wraps two queries into one for both the dog tag collected and dog tag surrendered stats when using AdKats. Performance issue labeled on GitHub as issue #2. Improves performance due to latency. If player had hundreds or thousands of dog tags collected or dog tags surrendered, hundreds or thousands of queries would fire back to back.  Now it is all balled up into one query. Could improve performance in some cases by 50% or more in this regard.</li>
-</ul>
-
-<p>12-06-2016:</p>
-
-<ul>
-<li>Fixed a bug which caused only players ranked #2 through #20 to show up in country stats and skipped player ranked #1.</li>
-</ul>
-
-<p>11-26-2016:</p>
-
-<ul>
-<li>Added basic AdKats integration to highlight a player if they are banned or warned.</li>
-<li>Optimizations and improvements: SQL queries combined where possible to reduce the SQL server connection pool size (can drasticly improve performance in some cases with huge databases at remote locations), server HTML banner uses jquery to reload content instead of reloading the whole HTML document (less distracting reloads), file size reductions for CSS, JS, and some image files, background image resizes width to fit various resolutions better, etc.</li>
-</ul>
-
-<p>11-06-2016:</p>
-
-<ul>
-<li>Image /common/images/weapons/RoadKill.png should be name Roadkill.png.</li>
-<li>At bottom of player stats page, added link to www.team-des-fra.fr Cheat-O-Meter instead of www.247fairplay.com CheatDetector.</li>
-</ul>
-
-<p>11-04-2016:</p>
-
-<ul>
-<li>As requested by armypolice_UK from <a href="http://www.synergy-clan.com/" target="_blank">http://www.synergy-clan.com/</a> , this is the BF3 version ported over from the 8-29-16 dated version of my popular <a href="https://tyger07.github.io/BF4-Server-Stats/" target="_blank">BF4-Server-Stats stats webpage</a>.</li>
-</ul>
+<p>Enjoy!</p>
         </section>
 
         <footer>
